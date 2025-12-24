@@ -1,3 +1,10 @@
+#pragma once
+
+#include "doctest/parts/public/utility.h"
+#include "doctest/parts/public/std/fwd.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
 struct DOCTEST_INTERFACE IContextScope
@@ -59,3 +66,5 @@ namespace detail {
 #endif // DOCTEST_CONFIG_DISABLE
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

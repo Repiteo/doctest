@@ -1,3 +1,8 @@
+#pragma once
+
+#include "doctest/parts/public/config.h"
+#include "doctest/parts/public/std/fwd.h"
+
 namespace doctest {
 namespace Color {
     enum Enum

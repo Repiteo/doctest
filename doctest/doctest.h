@@ -1,4 +1,4 @@
-// ============================================================= lgtm [cpp/missing-header-guard]
+// =============================================================
 // == DO NOT MODIFY THIS FILE BY HAND - IT IS AUTO GENERATED! ==
 // =============================================================
 //
@@ -43,7 +43,7 @@
 #define DOCTEST_LIBRARY_INCLUDED
 
 // =================================================================================================
-// == VERSION ======================================================================================
+// == doctest/parts/public/version.h ===============================================================
 // =================================================================================================
 
 #define DOCTEST_VERSION_MAJOR 2
@@ -61,8 +61,9 @@
 
 #define DOCTEST_VERSION                                                                            \
     (DOCTEST_VERSION_MAJOR * 10000 + DOCTEST_VERSION_MINOR * 100 + DOCTEST_VERSION_PATCH)
+
 // =================================================================================================
-// == COMPILER VERSION =============================================================================
+// == doctest/parts/public/compiler.h ==============================================================
 // =================================================================================================
 
 // ideas for the version stuff are taken from here: https://github.com/cxxstuff/cxx_detect
@@ -106,8 +107,9 @@
 #ifndef DOCTEST_ICC
 #define DOCTEST_ICC 0
 #endif // DOCTEST_ICC
+
 // =================================================================================================
-// == COMPILER WARNINGS HELPERS ====================================================================
+// == doctest/parts/public/warnings.h ==============================================================
 // =================================================================================================
 
 #if DOCTEST_CLANG && !DOCTEST_ICC
@@ -150,10 +152,6 @@
 #define DOCTEST_MSVC_SUPPRESS_WARNING_POP
 #define DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(w)
 #endif // DOCTEST_MSVC
-
-// =================================================================================================
-// == COMPILER WARNINGS ============================================================================
-// =================================================================================================
 
 // both the header and the implementation suppress all of these,
 // so it only makes sense to aggregate them like so
@@ -211,6 +209,62 @@
     DOCTEST_GCC_SUPPRESS_WARNING_POP                                                               \
     DOCTEST_MSVC_SUPPRESS_WARNING_POP
 
+#define DOCTEST_SUPPRESS_PUBLIC_WARNINGS_PUSH                                                      \
+    DOCTEST_SUPPRESS_COMMON_WARNINGS_PUSH                                                          \
+                                                                                                   \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wnon-virtual-dtor")                                           \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wdeprecated")                                                 \
+                                                                                                   \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wctor-dtor-privacy")                                            \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wnon-virtual-dtor")                                             \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-promo")                                                   \
+                                                                                                   \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4623) /* default constructor was implicitly deleted */
+
+#define DOCTEST_SUPPRESS_PUBLIC_WARNINGS_POP DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
+
+#define DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH                                                     \
+    DOCTEST_SUPPRESS_COMMON_WARNINGS_PUSH                                                          \
+                                                                                                   \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wglobal-constructors")                                        \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wexit-time-destructors")                                      \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wsign-conversion")                                            \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wshorten-64-to-32")                                           \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-variable-declarations")                              \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wswitch")                                                     \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wswitch-enum")                                                \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wcovered-switch-default")                                     \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-noreturn")                                           \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wdisabled-macro-expansion")                                   \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-braces")                                             \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-field-initializers")                                 \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-member-function")                                     \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wnonportable-system-include-path")                            \
+                                                                                                   \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wconversion")                                                   \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-conversion")                                              \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wmissing-field-initializers")                                   \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wmissing-braces")                                               \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch")                                                       \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch-enum")                                                  \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch-default")                                               \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wunsafe-loop-optimizations")                                    \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wold-style-cast")                                               \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wunused-function")                                              \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wmultiple-inheritance")                                         \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wsuggest-attribute")                                            \
+                                                                                                   \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4267) /* conversion from 'x' to 'y', possible loss of data */    \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4530) /* exception handler, but unwind semantics not enabled */  \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4577) /* 'noexcept' with no exception handling mode specified */ \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4774) /* format string in argument is not a string literal */    \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4365) /* signed/unsigned mismatch */                             \
+    DOCTEST_MSVC_SUPPRESS_WARNING(5039) /* pointer to pot. throwing function passed to extern C */ \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4800) /* forcing value to bool (performance warning) */          \
+    DOCTEST_MSVC_SUPPRESS_WARNING(5245) /* unreferenced function with internal linkage removed */
+
+#define DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
+
 #define DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN                                 \
     DOCTEST_MSVC_SUPPRESS_WARNING_PUSH                                                             \
     DOCTEST_MSVC_SUPPRESS_WARNING(4548) /* before comma no effect; expected side - effect */       \
@@ -234,22 +288,9 @@
 
 #define DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END DOCTEST_MSVC_SUPPRESS_WARNING_POP
 
-DOCTEST_SUPPRESS_COMMON_WARNINGS_PUSH
-
-DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wnon-virtual-dtor")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wdeprecated")
-
-DOCTEST_GCC_SUPPRESS_WARNING_PUSH
-DOCTEST_GCC_SUPPRESS_WARNING("-Wctor-dtor-privacy")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wnon-virtual-dtor")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-promo")
-
-DOCTEST_MSVC_SUPPRESS_WARNING_PUSH
-DOCTEST_MSVC_SUPPRESS_WARNING(4623) // default constructor was implicitly defined as deleted
 
 // =================================================================================================
-// == FEATURE DETECTION ============================================================================
+// == doctest/parts/public/config.h ================================================================
 // =================================================================================================
 
 // general compiler feature support table: https://en.cppreference.com/w/cpp/compiler_support
@@ -433,18 +474,23 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4623) // default constructor was implicitly define
 #endif // DOCTEST_CONFIG_USE_STD_HEADERS
 
 // =================================================================================================
-// == FEATURE DETECTION END ========================================================================
+// == doctest/parts/public/utility.h ===============================================================
 // =================================================================================================
+
 #define DOCTEST_DECLARE_INTERFACE(name)                                                            \
+    DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")                            \
     virtual ~name();                                                                               \
     name() = default;                                                                              \
     name(const name&) = delete;                                                                    \
     name(name&&) = delete;                                                                         \
     name& operator=(const name&) = delete;                                                         \
-    name& operator=(name&&) = delete;
+    name& operator=(name&&) = delete;                                                              \
+    DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
 #define DOCTEST_DEFINE_INTERFACE(name)                                                             \
-    name::~name() = default;
+    DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")                            \
+    name::~name() = default;                                                                       \
+    DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
 // internal macros for string concatenation and anonymous variable name generation
 #define DOCTEST_CAT_IMPL(s1, s2) s1##s2
@@ -461,6 +507,11 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4623) // default constructor was implicitly define
 #define DOCTEST_REF_WRAP(x) x
 #endif // DOCTEST_CONFIG_ASSERTION_PARAMETERS_BY_VALUE
 
+DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wc++98-compat-pedantic")
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-function")
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-macros")
+
 namespace doctest { namespace detail {
     static DOCTEST_CONSTEXPR int consume(const int*, int) noexcept { return 0; }
 }}
@@ -469,6 +520,13 @@ namespace doctest { namespace detail {
     DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wglobal-constructors")                                \
     static const int var = doctest::detail::consume(&var, __VA_ARGS__);                              \
     DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/platform.h ==============================================================
+// =================================================================================================
+
 // not using __APPLE__ because... this is how Catch does it
 #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
 #define DOCTEST_PLATFORM_MAC
@@ -481,6 +539,11 @@ namespace doctest { namespace detail {
 #else // DOCTEST_PLATFORM
 #define DOCTEST_PLATFORM_LINUX
 #endif // DOCTEST_PLATFORM
+
+// =================================================================================================
+// == doctest/parts/public/debugger.h ==============================================================
+// =================================================================================================
+
 #ifndef DOCTEST_BREAK_INTO_DEBUGGER
 // should probably take a look at https://github.com/scottt/debugbreak
 #ifdef DOCTEST_PLATFORM_LINUX
@@ -521,6 +584,11 @@ namespace detail {
 } // doctest
 
 #endif
+
+// =================================================================================================
+// == doctest/parts/public/std/fwd.h ===============================================================
+// =================================================================================================
+
 #ifdef DOCTEST_CONFIG_USE_STD_HEADERS
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <cstddef>
@@ -529,8 +597,9 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #else // DOCTEST_CONFIG_USE_STD_HEADERS
 
-// Forward declaring 'X' in namespace std is not permitted by the C++ Standard.
-DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4643)
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4643) // Foward-declaring in std namespace
+// NOLINTBEGIN(cert-dcl58-cpp)
 
 namespace std { // NOLINT(cert-dcl58-cpp)
 typedef decltype(nullptr) nullptr_t; // NOLINT(modernize-use-using)
@@ -560,13 +629,22 @@ using string = basic_string<char, char_traits<char>, allocator<char>>;
 #endif // VS 2019
 } // namespace std
 
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
 DOCTEST_MSVC_SUPPRESS_WARNING_POP
+// NOLINTEND(cert-dcl58-cpp)
 
 #endif // DOCTEST_CONFIG_USE_STD_HEADERS
 
 namespace doctest {
   using std::size_t;
 }
+
+// =================================================================================================
+// == doctest/parts/public/std/type_traits.h =======================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 #ifdef DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 #include <type_traits>
 #endif // DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
@@ -612,6 +690,15 @@ namespace types {
 } // namespace types
 } // namespace detail
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/std/utility.h ===========================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 namespace detail {
 
@@ -634,6 +721,15 @@ namespace detail {
 
 } // namespace detail
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/string.h ================================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 #ifndef DOCTEST_CONFIG_STRING_SIZE_TYPE
 #define DOCTEST_CONFIG_STRING_SIZE_TYPE unsigned
@@ -978,6 +1074,13 @@ namespace detail {
 } //namespace detail
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/matchers/contains.h =====================================================
+// =================================================================================================
+
 namespace doctest {
 
 class DOCTEST_INTERFACE Contains {
@@ -997,6 +1100,11 @@ DOCTEST_INTERFACE bool operator!=(const String& lhs, const Contains& rhs);
 DOCTEST_INTERFACE bool operator!=(const Contains& lhs, const String& rhs);
 
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/public/matchers/approx.h =======================================================
+// =================================================================================================
+
 namespace doctest {
 
 struct DOCTEST_INTERFACE Approx
@@ -1079,6 +1187,13 @@ struct DOCTEST_INTERFACE Approx
 DOCTEST_INTERFACE String toString(const Approx& in);
 
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/public/matchers/is_nan.h =======================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
 template <typename F>
@@ -1101,6 +1216,15 @@ DOCTEST_INTERFACE String toString(IsNaN<double> in);
 DOCTEST_INTERFACE String toString(IsNaN<double long> in);
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/context/options.h =======================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 namespace detail {
     struct DOCTEST_INTERFACE TestCase;
@@ -1158,6 +1282,15 @@ namespace detail {
     DOCTEST_INTERFACE const ContextOptions* getContextOptions();
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/assert/type.h ===========================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 namespace assertType {
     enum Enum
@@ -1254,6 +1387,15 @@ DOCTEST_INTERFACE const char* assertString(assertType::Enum at);
 DOCTEST_INTERFACE const char* failureString(assertType::Enum at);
 
 }
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/assert/data.h ===========================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
     struct DOCTEST_INTERFACE TestCaseData;
@@ -1300,6 +1442,13 @@ namespace doctest {
     };
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/assert/comparator.h =====================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -1347,6 +1496,8 @@ namespace detail  {
     DOCTEST_RELATIONAL_OP(le, <=)
     DOCTEST_RELATIONAL_OP(ge, >=)
 
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wunused-macros")
+
 #ifndef DOCTEST_CONFIG_TREAT_CHAR_STAR_AS_STRING
 #define DOCTEST_CMP_EQ(l, r) l == r
 #define DOCTEST_CMP_NE(l, r) l != r
@@ -1362,6 +1513,8 @@ namespace detail  {
 #define DOCTEST_CMP_GE(l, r) ge(l, r)
 #define DOCTEST_CMP_LE(l, r) le(l, r)
 #endif // DOCTEST_CONFIG_TREAT_CHAR_STAR_AS_STRING
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
     namespace binaryAssertComparison {
         enum Enum
@@ -1393,6 +1546,13 @@ namespace detail  {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/public/assert/result.h =========================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -1487,6 +1647,15 @@ namespace detail {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/assert/expression.h =====================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -1640,6 +1809,13 @@ struct DOCTEST_INTERFACE ExpressionDecomposer
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/color.h =================================================================
+// =================================================================================================
+
 namespace doctest {
 namespace Color {
     enum Enum
@@ -1664,6 +1840,13 @@ namespace Color {
     DOCTEST_INTERFACE std::ostream& operator<<(std::ostream& s, Color::Enum code);
 } // namespace Color
 }
+
+// =================================================================================================
+// == doctest/parts/public/subcase.h ===============================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
 struct DOCTEST_INTERFACE SubcaseSignature
@@ -1699,6 +1882,15 @@ struct DOCTEST_INTERFACE Subcase
 #endif // DOCTEST_CONFIG_DISABLE
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/test_suite.h ============================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -1739,6 +1931,15 @@ DOCTEST_INTERFACE doctest::detail::TestSuite& getCurrentTestSuite();
 } // namespace doctest_detail_test_suite_ns
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/test_case.h =============================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
     struct DOCTEST_INTERFACE TestCaseData
@@ -1802,6 +2003,13 @@ namespace detail {
 #endif // DOCTEST_CONFIG_DISABLE
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/decorators.h ============================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -1829,6 +2037,13 @@ DOCTEST_DEFINE_DECORATOR(expected_failures, int, 0);
 } // namespace
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/public/exception_translator.h ==================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 namespace detail {
 
@@ -1892,6 +2107,15 @@ int registerExceptionTranslator(String (*)(T)) {
 #endif // DOCTEST_CONFIG_DISABLE
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/context_scope.h =========================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
 struct DOCTEST_INTERFACE IContextScope
@@ -1953,6 +2177,15 @@ namespace detail {
 #endif // DOCTEST_CONFIG_DISABLE
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/assert/message.h ========================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
     struct DOCTEST_INTERFACE MessageData
@@ -2010,11 +2243,20 @@ DOCTEST_MSVC_SUPPRESS_WARNING_POP
 
 } // namespace doctest
 
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+
 namespace doctest {
 
 DOCTEST_INTERFACE const char* skipPathFromFilename(const char* file);
 
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/public/exceptions.h ============================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -2036,6 +2278,15 @@ namespace detail {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/context.h ===============================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
     DOCTEST_INTERFACE extern bool is_running_in_test;
@@ -2081,6 +2332,13 @@ public:
     int run();
 };
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+// =================================================================================================
+// == doctest/parts/public/assert/handler.h ========================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -2154,6 +2412,11 @@ namespace detail {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/public/reporter.h ==============================================================
+// =================================================================================================
+
 namespace doctest {
 
 namespace TestCaseFailureReason {
@@ -2271,6 +2534,15 @@ namespace detail {
         return 0;
     }
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/public/macros.h ================================================================
+// =================================================================================================
+
+DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wc++98-compat-pedantic")
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-macros")
+
 #ifndef DOCTEST_CONFIG_DISABLE
 namespace doctest {
 namespace detail {
@@ -3237,76 +3509,33 @@ namespace detail {
 
 #endif // DOCTEST_CONFIG_NO_SHORT_MACRO_NAMES
 
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
 // this is here to clear the 'current test suite' for the current translation unit - at the top
 DOCTEST_TEST_SUITE_END();
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
 #endif // DOCTEST_CONFIG_DISABLE
 
-DOCTEST_CLANG_SUPPRESS_WARNING_POP
-DOCTEST_MSVC_SUPPRESS_WARNING_POP
-DOCTEST_GCC_SUPPRESS_WARNING_POP
-
-DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
-
 #endif // DOCTEST_LIBRARY_INCLUDED
-#ifndef DOCTEST_SINGLE_HEADER
-#define DOCTEST_SINGLE_HEADER
-#endif // DOCTEST_SINGLE_HEADER
 
-#if defined(DOCTEST_CONFIG_IMPLEMENT) || !defined(DOCTEST_SINGLE_HEADER)
 
-#ifndef DOCTEST_SINGLE_HEADER
-#include "doctest_fwd.h"
-#endif // DOCTEST_SINGLE_HEADER
+#if defined(DOCTEST_CONFIG_IMPLEMENT)
 
 DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wunused-macros")
 #ifndef DOCTEST_LIBRARY_IMPLEMENTATION
 #define DOCTEST_LIBRARY_IMPLEMENTATION
 DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
-DOCTEST_SUPPRESS_COMMON_WARNINGS_PUSH
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
-DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wglobal-constructors")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wexit-time-destructors")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wsign-conversion")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wshorten-64-to-32")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-variable-declarations")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wswitch")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wswitch-enum")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wcovered-switch-default")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-noreturn")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wdisabled-macro-expansion")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-braces")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-field-initializers")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-member-function")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wnonportable-system-include-path")
-
-DOCTEST_GCC_SUPPRESS_WARNING_PUSH
-DOCTEST_GCC_SUPPRESS_WARNING("-Wconversion")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-conversion")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wmissing-field-initializers")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wmissing-braces")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch-enum")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch-default")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wunsafe-loop-optimizations")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wold-style-cast")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wunused-function")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wmultiple-inheritance")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wsuggest-attribute")
-
-DOCTEST_MSVC_SUPPRESS_WARNING_PUSH
-DOCTEST_MSVC_SUPPRESS_WARNING(4267) // 'var' : conversion from 'x' to 'y', possible loss of data
-DOCTEST_MSVC_SUPPRESS_WARNING(4530) // C++ exception handler used, but unwind semantics not enabled
-DOCTEST_MSVC_SUPPRESS_WARNING(4577) // 'noexcept' used with no exception handling mode specified
-DOCTEST_MSVC_SUPPRESS_WARNING(4774) // format string expected in argument is not a string literal
-DOCTEST_MSVC_SUPPRESS_WARNING(4365) // conversion from 'int' to 'unsigned', signed/unsigned mismatch
-DOCTEST_MSVC_SUPPRESS_WARNING(5039) // pointer to potentially throwing function passed to extern C
-DOCTEST_MSVC_SUPPRESS_WARNING(4800) // forcing value to bool 'true' or 'false' (performance warning)
-DOCTEST_MSVC_SUPPRESS_WARNING(5245) // unreferenced function with internal linkage has been removed
+// =================================================================================================
+// == doctest/parts/private/prelude.h ==============================================================
+// =================================================================================================
 
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 
@@ -3437,6 +3666,10 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #define DOCTEST_CDECL __cdecl
 #endif
 
+// =================================================================================================
+// == doctest/parts/private/timer.h ================================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -3494,6 +3727,10 @@ using ticks_t = timer_large_integer::type;
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/atomic.h ===============================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -3600,6 +3837,10 @@ namespace detail {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/context_state.h ========================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -3695,6 +3936,10 @@ namespace detail {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/assert/data.cpp ========================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -3716,6 +3961,10 @@ namespace doctest {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/assert/expression.cpp ==================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -3728,6 +3977,10 @@ ExpressionDecomposer::ExpressionDecomposer(assertType::Enum at)
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/assert/handler.cpp =====================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -3759,6 +4012,10 @@ namespace detail {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/reporter.h =============================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -3784,6 +4041,10 @@ namespace {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/assert/handler.h =======================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -3825,6 +4086,10 @@ namespace {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/assert/message.cpp =====================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -3873,6 +4138,10 @@ namespace detail {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/assert/result.cpp ======================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -3908,6 +4177,10 @@ namespace detail {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/exceptions.h ===========================================================
+// =================================================================================================
+
 namespace doctest {
 namespace {
     using namespace detail;
@@ -3937,6 +4210,10 @@ namespace {
 } // namespace
 
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/private/assert/type.cpp ========================================================
+// =================================================================================================
 
 namespace doctest {
 
@@ -3998,6 +4275,10 @@ const char* failureString(assertType::Enum at) {
 }
 
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/private/color.cpp ==============================================================
+// =================================================================================================
 
 #if !defined(DOCTEST_CONFIG_COLORS_NONE)
 #if !defined(DOCTEST_CONFIG_COLORS_WINDOWS) && !defined(DOCTEST_CONFIG_COLORS_ANSI)
@@ -4107,11 +4388,19 @@ namespace {
 #endif // DOCTEST_CONFIG_DISABLED
 }
 
+// =================================================================================================
+// == doctest/parts/private/context/options.cpp ====================================================
+// =================================================================================================
+
 namespace doctest {
 
     const ContextOptions* getContextOptions() { return DOCTEST_BRANCH_ON_DISABLED(nullptr, detail::g_cs); }
 
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/private/reporters/common.h =====================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_OPTIONS_PREFIX
 #define DOCTEST_CONFIG_OPTIONS_PREFIX "dt-"
@@ -4176,6 +4465,10 @@ namespace doctest {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/reporters/console.h ====================================================
+// =================================================================================================
 
 #ifdef DOCTEST_CONFIG_NO_UNPREFIXED_OPTIONS
 #define DOCTEST_OPTIONS_PREFIX_DISPLAY DOCTEST_CONFIG_OPTIONS_PREFIX
@@ -4661,6 +4954,10 @@ namespace doctest {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/reporters/debug_output_window.h ========================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -4713,6 +5010,11 @@ namespace {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/exception_translator.h =================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -4725,6 +5027,10 @@ namespace detail {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/test_case.h ============================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -4741,6 +5047,10 @@ namespace detail {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/filters.h ==============================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -4800,6 +5110,10 @@ namespace {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/signals.h ==============================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -5053,6 +5367,10 @@ namespace {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/context.cpp ============================================================
+// =================================================================================================
 
 namespace doctest {
 
@@ -5721,6 +6039,10 @@ namespace {
 
 } // namespace doctest
 
+// =================================================================================================
+// == doctest/parts/private/context_scope.h ========================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -5730,6 +6052,10 @@ namespace detail {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/context_scope.cpp ======================================================
+// =================================================================================================
 
 namespace doctest {
 
@@ -5776,6 +6102,10 @@ namespace detail {
 #endif // DOCTEST_CONFIG_DISABLE
 
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/private/debugger.cpp ===========================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -5842,6 +6172,10 @@ namespace detail {
 } // doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/doctest.cpp ============================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_OPTIONS_FILE_PREFIX_SEPARATOR
 #define DOCTEST_CONFIG_OPTIONS_FILE_PREFIX_SEPARATOR ':'
@@ -5976,6 +6310,9 @@ namespace detail {
 } // namespace detail
 } // namespace doctest
 
+// =================================================================================================
+// == doctest/parts/private/xml.h ==================================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -6086,6 +6423,10 @@ namespace detail {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/reporters/xml.h ========================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -6332,6 +6673,10 @@ namespace doctest {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/reporters/junit.h ======================================================
+// =================================================================================================
+
 namespace doctest {
 
     // TODO:
@@ -6577,6 +6922,7 @@ namespace doctest {
 
 } // namespace doctest
 
+
 #endif // DOCTEST_CONFIG_DISABLE
 
 #ifdef DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -6584,6 +6930,10 @@ DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4007) // 'function' : must be 'attribute
 int main(int argc, char** argv) { return doctest::Context(argc, argv).run(); }
 DOCTEST_MSVC_SUPPRESS_WARNING_POP
 #endif // DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
+// =================================================================================================
+// == doctest/parts/private/exception_translator.cpp ===============================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -6635,6 +6985,10 @@ namespace detail {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/exceptions.cpp =========================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -6666,6 +7020,10 @@ namespace detail {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/matchers/approx.cpp ====================================================
+// =================================================================================================
 
 namespace doctest {
 
@@ -6713,6 +7071,10 @@ String toString(const Approx& in) {
 
 } // namespace doctest
 
+// =================================================================================================
+// == doctest/parts/private/matchers/contains.cpp ==================================================
+// =================================================================================================
+
 namespace doctest {
 
 Contains::Contains(const String& str) : string(str) { }
@@ -6731,6 +7093,10 @@ bool operator!=(const String& lhs, const Contains& rhs) { return !rhs.checkWith(
 bool operator!=(const Contains& lhs, const String& rhs) { return !lhs.checkWith(rhs); }
 
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/private/matchers/is_nan.cpp ====================================================
+// =================================================================================================
 
 namespace doctest {
 
@@ -6751,6 +7117,10 @@ String toString(IsNaN<double> in) { return toString<double>(in); }
 String toString(IsNaN<double long> in) { return toString<double long>(in); }
 
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/private/reporter.cpp ===========================================================
+// =================================================================================================
 
 namespace doctest {
 #ifdef DOCTEST_CONFIG_DISABLE
@@ -6787,6 +7157,10 @@ namespace doctest {
 
 #endif // DOCTEST_CONFIG_DISABLE
 } // namespace doctest
+
+// =================================================================================================
+// == doctest/parts/private/string.cpp =============================================================
+// =================================================================================================
 
 namespace doctest {
 namespace detail {
@@ -7091,6 +7465,10 @@ String toString(long long unsigned in) { return toStreamLit(in); }
 
 } // namespace doctest
 
+// =================================================================================================
+// == doctest/parts/private/subcase.cpp ============================================================
+// =================================================================================================
+
 namespace doctest {
 
     bool SubcaseSignature::operator==(const SubcaseSignature& other) const {
@@ -7199,6 +7577,10 @@ namespace detail {
 
 } // namespace doctest
 
+// =================================================================================================
+// == doctest/parts/private/test_case.cpp ==========================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -7278,6 +7660,10 @@ int regTest(const TestCase& tc) {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
+// =================================================================================================
+// == doctest/parts/private/test_suite.cpp =========================================================
+// =================================================================================================
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -7306,6 +7692,10 @@ doctest::detail::TestSuite& getCurrentTestSuite() {
 } // namespace doctest_detail_test_suite_ns
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+// =================================================================================================
+// == doctest/parts/private/xml.cpp ================================================================
+// =================================================================================================
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -7607,12 +7997,9 @@ namespace {
 
 #endif // DOCTEST_CONFIG_DISABLE
 
-DOCTEST_CLANG_SUPPRESS_WARNING_POP
-DOCTEST_MSVC_SUPPRESS_WARNING_POP
-DOCTEST_GCC_SUPPRESS_WARNING_POP
 
-DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP
 
 #endif // DOCTEST_LIBRARY_IMPLEMENTATION
 
-#endif // defined(DOCTEST_CONFIG_IMPLEMENT) || !defined(DOCTEST_SINGLE_HEADER)
+#endif // DOCTEST_CONFIG_IMPLEMENT

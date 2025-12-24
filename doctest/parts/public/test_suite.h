@@ -1,3 +1,10 @@
+#pragma once
+
+#include "doctest/parts/public/config.h"
+#include "doctest/parts/public/warnings.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -38,3 +45,5 @@ DOCTEST_INTERFACE doctest::detail::TestSuite& getCurrentTestSuite();
 } // namespace doctest_detail_test_suite_ns
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

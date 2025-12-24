@@ -1,3 +1,9 @@
+#pragma once
+
+#include "doctest/parts/public/string.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 namespace detail {
 
@@ -61,3 +67,5 @@ int registerExceptionTranslator(String (*)(T)) {
 #endif // DOCTEST_CONFIG_DISABLE
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

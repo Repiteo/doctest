@@ -1,3 +1,9 @@
+#pragma once
+
+#include "doctest/parts/public/assert/data.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
     DOCTEST_INTERFACE extern bool is_running_in_test;
@@ -43,3 +49,5 @@ public:
     int run();
 };
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

@@ -1,3 +1,12 @@
+#pragma once
+
+#include "doctest/parts/public/utility.h"
+#include "doctest/parts/public/std/fwd.h"
+#include "doctest/parts/public/std/type_traits.h"
+#include "doctest/parts/public/std/utility.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 #ifndef DOCTEST_CONFIG_STRING_SIZE_TYPE
 #define DOCTEST_CONFIG_STRING_SIZE_TYPE unsigned
@@ -342,3 +351,5 @@ namespace detail {
 } //namespace detail
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

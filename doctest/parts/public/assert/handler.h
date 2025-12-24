@@ -1,3 +1,11 @@
+#pragma once
+
+#include "doctest/parts/public/assert/data.h"
+#include "doctest/parts/public/assert/result.h"
+#include "doctest/parts/public/assert/type.h"
+#include "doctest/parts/public/context.h"
+#include "doctest/parts/public/string.h"
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {

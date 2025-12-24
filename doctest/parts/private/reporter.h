@@ -1,5 +1,9 @@
+#pragma once
+
 #include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/context_state.h"
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
@@ -26,3 +30,5 @@ namespace {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP

@@ -1,3 +1,7 @@
+#pragma once
+
+#include "doctest/parts/public/test_case.h"
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {

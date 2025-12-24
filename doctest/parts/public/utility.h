@@ -1,13 +1,22 @@
+#pragma once
+
+#include "doctest/parts/public/config.h"
+#include "doctest/parts/public/warnings.h"
+
 #define DOCTEST_DECLARE_INTERFACE(name)                                                            \
+    DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")                            \
     virtual ~name();                                                                               \
     name() = default;                                                                              \
     name(const name&) = delete;                                                                    \
     name(name&&) = delete;                                                                         \
     name& operator=(const name&) = delete;                                                         \
-    name& operator=(name&&) = delete;
+    name& operator=(name&&) = delete;                                                              \
+    DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
 #define DOCTEST_DEFINE_INTERFACE(name)                                                             \
-    name::~name() = default;
+    DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")                            \
+    name::~name() = default;                                                                       \
+    DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
 // internal macros for string concatenation and anonymous variable name generation
 #define DOCTEST_CAT_IMPL(s1, s2) s1##s2
@@ -24,6 +33,11 @@
 #define DOCTEST_REF_WRAP(x) x
 #endif // DOCTEST_CONFIG_ASSERTION_PARAMETERS_BY_VALUE
 
+DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wc++98-compat-pedantic")
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-function")
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-macros")
+
 namespace doctest { namespace detail {
     static DOCTEST_CONSTEXPR int consume(const int*, int) noexcept { return 0; }
 }}
@@ -32,3 +46,5 @@ namespace doctest { namespace detail {
     DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wglobal-constructors")                                \
     static const int var = doctest::detail::consume(&var, __VA_ARGS__);                              \
     DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

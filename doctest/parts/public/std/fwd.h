@@ -1,3 +1,8 @@
+#pragma once
+
+#include "doctest/parts/public/config.h"
+#include "doctest/parts/public/warnings.h"
+
 #ifdef DOCTEST_CONFIG_USE_STD_HEADERS
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <cstddef>
@@ -6,8 +11,9 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #else // DOCTEST_CONFIG_USE_STD_HEADERS
 
-// Forward declaring 'X' in namespace std is not permitted by the C++ Standard.
-DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4643)
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(4643) // Foward-declaring in std namespace
+// NOLINTBEGIN(cert-dcl58-cpp)
 
 namespace std { // NOLINT(cert-dcl58-cpp)
 typedef decltype(nullptr) nullptr_t; // NOLINT(modernize-use-using)
@@ -37,7 +43,9 @@ using string = basic_string<char, char_traits<char>, allocator<char>>;
 #endif // VS 2019
 } // namespace std
 
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
 DOCTEST_MSVC_SUPPRESS_WARNING_POP
+// NOLINTEND(cert-dcl58-cpp)
 
 #endif // DOCTEST_CONFIG_USE_STD_HEADERS
 

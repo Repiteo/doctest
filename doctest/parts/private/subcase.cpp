@@ -1,6 +1,8 @@
 #include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/context_state.h"
 
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+
 namespace doctest {
 
     bool SubcaseSignature::operator==(const SubcaseSignature& other) const {
@@ -108,3 +110,5 @@ namespace detail {
 #endif // DOCTEST_CONFIG_DISABLE
 
 } // namespace doctest
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP

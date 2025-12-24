@@ -1,3 +1,9 @@
+#pragma once
+
+#include "doctest/parts/doctest_fwd.h"
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 
 // required includes - will go only in one translation unit!
@@ -126,3 +132,5 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #ifndef DOCTEST_CDECL
 #define DOCTEST_CDECL __cdecl
 #endif
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP

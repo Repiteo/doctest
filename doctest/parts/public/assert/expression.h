@@ -1,3 +1,12 @@
+#pragma once
+
+#include "doctest/parts/public/assert/result.h"
+#include "doctest/parts/public/assert/type.h"
+#include "doctest/parts/public/context/options.h"
+#include "doctest/parts/public/string.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -151,3 +160,5 @@ struct DOCTEST_INTERFACE ExpressionDecomposer
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

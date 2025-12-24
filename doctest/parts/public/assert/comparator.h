@@ -1,3 +1,7 @@
+#pragma once
+
+#include "doctest/parts/public/string.h"
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -45,6 +49,8 @@ namespace detail  {
     DOCTEST_RELATIONAL_OP(le, <=)
     DOCTEST_RELATIONAL_OP(ge, >=)
 
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wunused-macros")
+
 #ifndef DOCTEST_CONFIG_TREAT_CHAR_STAR_AS_STRING
 #define DOCTEST_CMP_EQ(l, r) l == r
 #define DOCTEST_CMP_NE(l, r) l != r
@@ -60,6 +66,8 @@ namespace detail  {
 #define DOCTEST_CMP_GE(l, r) ge(l, r)
 #define DOCTEST_CMP_LE(l, r) le(l, r)
 #endif // DOCTEST_CONFIG_TREAT_CHAR_STAR_AS_STRING
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
     namespace binaryAssertComparison {
         enum Enum

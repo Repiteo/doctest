@@ -1,3 +1,9 @@
+#pragma once
+
+#include "doctest/parts/public/std/type_traits.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 namespace detail {
 
@@ -20,3 +26,5 @@ namespace detail {
 
 } // namespace detail
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

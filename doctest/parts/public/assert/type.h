@@ -1,3 +1,10 @@
+#pragma once
+
+#include "doctest/parts/public/config.h"
+#include "doctest/parts/public/warnings.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 namespace assertType {
     enum Enum
@@ -94,3 +101,5 @@ DOCTEST_INTERFACE const char* assertString(assertType::Enum at);
 DOCTEST_INTERFACE const char* failureString(assertType::Enum at);
 
 }
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

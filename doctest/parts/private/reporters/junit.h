@@ -1,6 +1,10 @@
+#pragma once
+
 #include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/xml.h"
 #include "doctest/parts/private/reporters/common.h"
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
 namespace doctest {
 
@@ -246,3 +250,5 @@ namespace doctest {
     DOCTEST_REGISTER_REPORTER("junit", 0, JUnitReporter);
 
 } // namespace doctest
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP

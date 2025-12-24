@@ -1,3 +1,10 @@
+#pragma once
+
+#include "doctest/parts/public/config.h"
+#include "doctest/parts/public/warnings.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 #ifdef DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 #include <type_traits>
 #endif // DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
@@ -43,3 +50,5 @@ namespace types {
 } // namespace types
 } // namespace detail
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

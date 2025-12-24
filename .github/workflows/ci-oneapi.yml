@@ -2,7 +2,7 @@ name: CI OneAPI
 
 on:
   push:
-    branches: [dev, master]
+    # branches: [dev, master]
     paths-ignore:
       - "doc/**"
       - "scripts/**"

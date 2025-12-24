@@ -1,3 +1,10 @@
+#pragma once
+
+#include "doctest/parts/public/assert/type.h"
+#include "doctest/parts/public/matchers/contains.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
     struct DOCTEST_INTERFACE TestCaseData;
@@ -44,3 +51,5 @@ namespace doctest {
     };
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

@@ -1,3 +1,9 @@
+#pragma once
+
+#include "doctest/parts/public/string.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
 template <typename F>
@@ -20,3 +26,5 @@ DOCTEST_INTERFACE String toString(IsNaN<double> in);
 DOCTEST_INTERFACE String toString(IsNaN<double long> in);
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

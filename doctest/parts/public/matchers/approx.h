@@ -1,3 +1,7 @@
+#pragma once
+
+#include "doctest/parts/public/string.h"
+
 namespace doctest {
 
 struct DOCTEST_INTERFACE Approx

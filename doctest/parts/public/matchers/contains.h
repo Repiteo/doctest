@@ -1,3 +1,7 @@
+#pragma once
+
+#include "doctest/parts/public/string.h"
+
 namespace doctest {
 
 class DOCTEST_INTERFACE Contains {

@@ -1,6 +1,6 @@
-// =================================================================================================
-// == FEATURE DETECTION ============================================================================
-// =================================================================================================
+#pragma once
+
+#include "doctest/parts/public/compiler.h"
 
 // general compiler feature support table: https://en.cppreference.com/w/cpp/compiler_support
 // MSVC C++11 feature support table: https://msdn.microsoft.com/en-us/library/hh567368.aspx
@@ -181,7 +181,3 @@
 #define DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 #endif // DOCTEST_CONFIG_INCLUDE_TYPE_TRAITS
 #endif // DOCTEST_CONFIG_USE_STD_HEADERS
-
-// =================================================================================================
-// == FEATURE DETECTION END ========================================================================
-// =================================================================================================

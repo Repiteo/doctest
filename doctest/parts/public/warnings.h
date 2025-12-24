@@ -1,6 +1,6 @@
-// =================================================================================================
-// == COMPILER WARNINGS HELPERS ====================================================================
-// =================================================================================================
+#pragma once
+
+#include "doctest/parts/public/compiler.h"
 
 #if DOCTEST_CLANG && !DOCTEST_ICC
 #define DOCTEST_PRAGMA_TO_STR(x) _Pragma(#x)
@@ -42,10 +42,6 @@
 #define DOCTEST_MSVC_SUPPRESS_WARNING_POP
 #define DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(w)
 #endif // DOCTEST_MSVC
-
-// =================================================================================================
-// == COMPILER WARNINGS ============================================================================
-// =================================================================================================
 
 // both the header and the implementation suppress all of these,
 // so it only makes sense to aggregate them like so
@@ -102,6 +98,62 @@
     DOCTEST_CLANG_SUPPRESS_WARNING_POP                                                             \
     DOCTEST_GCC_SUPPRESS_WARNING_POP                                                               \
     DOCTEST_MSVC_SUPPRESS_WARNING_POP
+
+#define DOCTEST_SUPPRESS_PUBLIC_WARNINGS_PUSH                                                      \
+    DOCTEST_SUPPRESS_COMMON_WARNINGS_PUSH                                                          \
+                                                                                                   \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wnon-virtual-dtor")                                           \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wdeprecated")                                                 \
+                                                                                                   \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wctor-dtor-privacy")                                            \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wnon-virtual-dtor")                                             \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-promo")                                                   \
+                                                                                                   \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4623) /* default constructor was implicitly deleted */
+
+#define DOCTEST_SUPPRESS_PUBLIC_WARNINGS_POP DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
+
+#define DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH                                                     \
+    DOCTEST_SUPPRESS_COMMON_WARNINGS_PUSH                                                          \
+                                                                                                   \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wglobal-constructors")                                        \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wexit-time-destructors")                                      \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wsign-conversion")                                            \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wshorten-64-to-32")                                           \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-variable-declarations")                              \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wswitch")                                                     \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wswitch-enum")                                                \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wcovered-switch-default")                                     \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-noreturn")                                           \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wdisabled-macro-expansion")                                   \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-braces")                                             \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-field-initializers")                                 \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-member-function")                                     \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wnonportable-system-include-path")                            \
+                                                                                                   \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wconversion")                                                   \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-conversion")                                              \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wmissing-field-initializers")                                   \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wmissing-braces")                                               \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch")                                                       \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch-enum")                                                  \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch-default")                                               \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wunsafe-loop-optimizations")                                    \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wold-style-cast")                                               \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wunused-function")                                              \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wmultiple-inheritance")                                         \
+    DOCTEST_GCC_SUPPRESS_WARNING("-Wsuggest-attribute")                                            \
+                                                                                                   \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4267) /* conversion from 'x' to 'y', possible loss of data */    \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4530) /* exception handler, but unwind semantics not enabled */  \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4577) /* 'noexcept' with no exception handling mode specified */ \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4774) /* format string in argument is not a string literal */    \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4365) /* signed/unsigned mismatch */                             \
+    DOCTEST_MSVC_SUPPRESS_WARNING(5039) /* pointer to pot. throwing function passed to extern C */ \
+    DOCTEST_MSVC_SUPPRESS_WARNING(4800) /* forcing value to bool (performance warning) */          \
+    DOCTEST_MSVC_SUPPRESS_WARNING(5245) /* unreferenced function with internal linkage removed */
+
+#define DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
 
 #define DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN                                 \
     DOCTEST_MSVC_SUPPRESS_WARNING_PUSH                                                             \

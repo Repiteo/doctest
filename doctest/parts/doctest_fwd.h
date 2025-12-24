@@ -1,3 +1,4 @@
+#pragma once
 //
 // doctest.h - the lightest feature-rich C++ single-header testing framework for unit tests and TDD
 //
@@ -43,20 +44,6 @@
 #include <doctest/parts/public/compiler.h>
 #include <doctest/parts/public/warnings.h>
 
-DOCTEST_SUPPRESS_COMMON_WARNINGS_PUSH
-
-DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wnon-virtual-dtor")
-DOCTEST_CLANG_SUPPRESS_WARNING("-Wdeprecated")
-
-DOCTEST_GCC_SUPPRESS_WARNING_PUSH
-DOCTEST_GCC_SUPPRESS_WARNING("-Wctor-dtor-privacy")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wnon-virtual-dtor")
-DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-promo")
-
-DOCTEST_MSVC_SUPPRESS_WARNING_PUSH
-DOCTEST_MSVC_SUPPRESS_WARNING(4623) // default constructor was implicitly defined as deleted
-
 #include <doctest/parts/public/config.h>
 #include <doctest/parts/public/utility.h>
 #include <doctest/parts/public/platform.h>
@@ -97,15 +84,11 @@ DOCTEST_INTERFACE const char* skipPathFromFilename(const char* file);
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
 // this is here to clear the 'current test suite' for the current translation unit - at the top
 DOCTEST_TEST_SUITE_END();
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
 #endif // DOCTEST_CONFIG_DISABLE
-
-DOCTEST_CLANG_SUPPRESS_WARNING_POP
-DOCTEST_MSVC_SUPPRESS_WARNING_POP
-DOCTEST_GCC_SUPPRESS_WARNING_POP
-
-DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
 
 #endif // DOCTEST_LIBRARY_INCLUDED

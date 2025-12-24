@@ -1,3 +1,10 @@
+#pragma once
+
+#include "doctest/parts/public/assert/type.h"
+#include "doctest/parts/public/string.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 namespace doctest {
 
     struct DOCTEST_INTERFACE MessageData
@@ -54,3 +61,5 @@ DOCTEST_MSVC_SUPPRESS_WARNING_POP
 #endif // DOCTEST_CONFIG_DISABLE
 
 } // namespace doctest
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

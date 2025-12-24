@@ -1,3 +1,11 @@
+#pragma once
+
+#include "doctest/parts/public/utility.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wc++98-compat-pedantic")
+DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-macros")
+
 #ifndef DOCTEST_CONFIG_DISABLE
 namespace doctest {
 namespace detail {
@@ -963,3 +971,5 @@ namespace detail {
 #define TEST_CASE_TEMPLATE_INSTANTIATE(id, ...) DOCTEST_TEST_CASE_TEMPLATE_INSTANTIATE(id, __VA_ARGS__)
 
 #endif // DOCTEST_CONFIG_NO_SHORT_MACRO_NAMES
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP

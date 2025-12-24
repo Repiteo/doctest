@@ -1,3 +1,8 @@
+#pragma once
+
+#include "doctest/parts/public/config.h"
+#include "doctest/parts/public/platform.h"
+
 #ifndef DOCTEST_BREAK_INTO_DEBUGGER
 // should probably take a look at https://github.com/scottt/debugbreak
 #ifdef DOCTEST_PLATFORM_LINUX

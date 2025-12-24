@@ -1,3 +1,13 @@
+#pragma once
+
+#include "doctest/parts/public/assert/type.h"
+#include "doctest/parts/public/assert/comparator.h"
+#include "doctest/parts/public/assert/data.h"
+#include "doctest/parts/public/matchers/contains.h"
+#include "doctest/parts/public/string.h"
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wc++98-compat-pedantic")
+
 #ifndef DOCTEST_CONFIG_DISABLE
 
 namespace doctest {
@@ -92,3 +102,5 @@ namespace detail {
 } // namespace doctest
 
 #endif // DOCTEST_CONFIG_DISABLE
+
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
