@@ -1,3 +1,43 @@
+#ifndef DOCTEST_PARTS_PRIVATE_PRELUDE
+#define DOCTEST_PARTS_PRIVATE_PRELUDE
+
+#include "doctest/parts/public/version.h"
+#include "doctest/parts/public/compiler.h"
+#include "doctest/parts/public/warnings.h"
+#include "doctest/parts/public/config.h"
+#include "doctest/parts/public/utility.h"
+#include "doctest/parts/public/platform.h"
+#include "doctest/parts/public/debugger.h"
+#include "doctest/parts/public/std/fwd.h"
+#include "doctest/parts/public/std/type_traits.h"
+#include "doctest/parts/public/std/utility.h"
+#include "doctest/parts/public/string.h"
+#include "doctest/parts/public/matchers/contains.h"
+#include "doctest/parts/public/matchers/approx.h"
+#include "doctest/parts/public/matchers/is_nan.h"
+#include "doctest/parts/public/context/options.h"
+#include "doctest/parts/public/assert/type.h"
+#include "doctest/parts/public/assert/data.h"
+#include "doctest/parts/public/assert/comparator.h"
+#include "doctest/parts/public/assert/result.h"
+#include "doctest/parts/public/assert/expression.h"
+#include "doctest/parts/public/color.h"
+#include "doctest/parts/public/subcase.h"
+#include "doctest/parts/public/test_suite.h"
+#include "doctest/parts/public/test_case.h"
+#include "doctest/parts/public/decorators.h"
+#include "doctest/parts/public/exception_translator.h"
+#include "doctest/parts/public/context_scope.h"
+#include "doctest/parts/public/assert/message.h"
+#include "doctest/parts/public/path.h"
+#include "doctest/parts/public/exceptions.h"
+#include "doctest/parts/public/context.h"
+#include "doctest/parts/public/assert/handler.h"
+#include "doctest/parts/public/reporter.h"
+#include "doctest/parts/public/macros.h"
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 
 // required includes - will go only in one translation unit!
@@ -126,3 +166,7 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #ifndef DOCTEST_CDECL
 #define DOCTEST_CDECL __cdecl
 #endif
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP
+
+#endif // DOCTEST_PARTS_PRIVATE_PRELUDE

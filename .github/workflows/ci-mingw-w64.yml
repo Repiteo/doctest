@@ -2,7 +2,7 @@ name: CI MinGW-w64
 
 on:
   push:
-    branches: [dev, master]
+    # branches: [dev, master]
     paths-ignore:
       - "doc/**"
       - "scripts/**"

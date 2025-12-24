@@ -27,75 +27,60 @@ TEMPLATE = string.Template(
   // ============================================================= lgtm [cpp/missing-header-guard]
   // == DO NOT MODIFY THIS FILE BY HAND - IT IS AUTO GENERATED! ==
   // =============================================================
+  //
+  // doctest.h - the lightest feature-rich C++ single-header testing framework for unit tests and TDD
+  //
+  // Copyright (c) 2016-2023 Viktor Kirilov
+  //
+  // Distributed under the MIT Software License
+  // See accompanying file LICENSE.txt or copy at
+  // https://opensource.org/licenses/MIT
+  //
+  // The documentation can be found at the library's page:
+  // https://github.com/doctest/doctest/blob/master/doc/markdown/readme.md
+  //
+  // =================================================================================================
+  // =================================================================================================
+  // =================================================================================================
+  //
+  // The library is heavily influenced by Catch - https://github.com/catchorg/Catch2
+  // which uses the Boost Software License - Version 1.0
+  // see here - https://github.com/catchorg/Catch2/blob/master/LICENSE.txt
+  //
+  // The concept of subcases (sections in Catch) and expression decomposition are from there.
+  // Some parts of the code are taken directly:
+  // - stringification - the detection of "ostream& operator<<(ostream&, const T&)" and StringMaker<>
+  // - the Approx() helper class for floating point comparison
+  // - colors in the console
+  // - breaking into a debugger
+  // - signal / SEH handling
+  // - timer
+  // - XmlWriter class - thanks to Phil Nash for allowing the direct reuse (AKA copy/paste)
+  //
+  // The expression decomposing templates are taken from lest - https://github.com/martinmoene/lest
+  // which uses the Boost Software License - Version 1.0
+  // see here - https://github.com/martinmoene/lest/blob/master/LICENSE.txt
+  //
+  // =================================================================================================
+  // =================================================================================================
+  // =================================================================================================
+
+  #ifndef DOCTEST_LIBRARY_INCLUDED
+  #define DOCTEST_LIBRARY_INCLUDED
+
   $headers
-  #ifndef DOCTEST_SINGLE_HEADER
-  #define DOCTEST_SINGLE_HEADER
-  #endif // DOCTEST_SINGLE_HEADER
 
-  #if defined(DOCTEST_CONFIG_IMPLEMENT) || !defined(DOCTEST_SINGLE_HEADER)
+  #endif // DOCTEST_LIBRARY_INCLUDED
 
-  #ifndef DOCTEST_SINGLE_HEADER
-  #include "doctest_fwd.h"
-  #endif // DOCTEST_SINGLE_HEADER
+  #if defined(DOCTEST_CONFIG_IMPLEMENT) && !defined(DOCTEST_LIBRARY_IMPLEMENTATION)
 
   DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wunused-macros")
-  #ifndef DOCTEST_LIBRARY_IMPLEMENTATION
   #define DOCTEST_LIBRARY_IMPLEMENTATION
   DOCTEST_CLANG_SUPPRESS_WARNING_POP
 
-  DOCTEST_SUPPRESS_COMMON_WARNINGS_PUSH
-
-  DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wglobal-constructors")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wexit-time-destructors")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wsign-conversion")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wshorten-64-to-32")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-variable-declarations")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wswitch")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wswitch-enum")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wcovered-switch-default")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-noreturn")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wdisabled-macro-expansion")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-braces")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wmissing-field-initializers")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-member-function")
-  DOCTEST_CLANG_SUPPRESS_WARNING("-Wnonportable-system-include-path")
-
-  DOCTEST_GCC_SUPPRESS_WARNING_PUSH
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wconversion")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wsign-conversion")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wmissing-field-initializers")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wmissing-braces")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch-enum")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wswitch-default")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wunsafe-loop-optimizations")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wold-style-cast")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wunused-function")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wmultiple-inheritance")
-  DOCTEST_GCC_SUPPRESS_WARNING("-Wsuggest-attribute")
-
-  DOCTEST_MSVC_SUPPRESS_WARNING_PUSH
-  DOCTEST_MSVC_SUPPRESS_WARNING(4267) // 'var' : conversion from 'x' to 'y', possible loss of data
-  DOCTEST_MSVC_SUPPRESS_WARNING(4530) // C++ exception handler used, but unwind semantics not enabled
-  DOCTEST_MSVC_SUPPRESS_WARNING(4577) // 'noexcept' used with no exception handling mode specified
-  DOCTEST_MSVC_SUPPRESS_WARNING(4774) // format string expected in argument is not a string literal
-  DOCTEST_MSVC_SUPPRESS_WARNING(4365) // conversion from 'int' to 'unsigned', signed/unsigned mismatch
-  DOCTEST_MSVC_SUPPRESS_WARNING(5039) // pointer to potentially throwing function passed to extern C
-  DOCTEST_MSVC_SUPPRESS_WARNING(4800) // forcing value to bool 'true' or 'false' (performance warning)
-  DOCTEST_MSVC_SUPPRESS_WARNING(5245) // unreferenced function with internal linkage has been removed
-
   $sources
 
-  DOCTEST_CLANG_SUPPRESS_WARNING_POP
-  DOCTEST_MSVC_SUPPRESS_WARNING_POP
-  DOCTEST_GCC_SUPPRESS_WARNING_POP
-
-  DOCTEST_SUPPRESS_COMMON_WARNINGS_POP
-
-  #endif // DOCTEST_LIBRARY_IMPLEMENTATION
-
-  #endif // defined(DOCTEST_CONFIG_IMPLEMENT) || !defined(DOCTEST_SINGLE_HEADER)
+  #endif // defined(DOCTEST_CONFIG_IMPLEMENT) && !defined(DOCTEST_LIBRARY_IMPLEMENTATION)
 """
     )
 )
@@ -173,10 +158,14 @@ def main(args):
                 yield line
 
     visited     = set()
-    doctest_fwd = root / "doctest" / "parts" / "doctest_fwd.h"
     result = TEMPLATE.substitute(
         headers="\n".join(
-            process_file(doctest_fwd, visited=visited, headers=public_headers)
+            chain.from_iterable(
+                process_file(
+                    file, visited=visited, headers=public_headers
+                )
+                for file in public_headers
+            )
         ),
         sources="\n".join(
             chain.from_iterable(
