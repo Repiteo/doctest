@@ -1,7 +1,3 @@
-// =================================================================================================
-// == COMPILER WARNINGS HELPERS ====================================================================
-// =================================================================================================
-
 #ifndef DOCTEST_PARTS_PUBLIC_WARNINGS
 #define DOCTEST_PARTS_PUBLIC_WARNINGS
 
@@ -48,10 +44,6 @@
 #define DOCTEST_MSVC_SUPPRESS_WARNING_WITH_PUSH(w)
 #endif // DOCTEST_MSVC
 
-// =================================================================================================
-// == COMPILER WARNINGS ============================================================================
-// =================================================================================================
-
 // both the header and the implementation suppress all of these,
 // so it only makes sense to aggregate them like so
 #define DOCTEST_SUPPRESS_COMMON_WARNINGS_PUSH                                                      \
@@ -64,6 +56,7 @@
     DOCTEST_CLANG_SUPPRESS_WARNING("-Wc++98-compat")                                               \
     DOCTEST_CLANG_SUPPRESS_WARNING("-Wc++98-compat-pedantic")                                      \
     DOCTEST_CLANG_SUPPRESS_WARNING("-Wunsafe-buffer-usage")                                        \
+    DOCTEST_CLANG_SUPPRESS_WARNING("-Wunused-macros")                                              \
                                                                                                    \
     DOCTEST_GCC_SUPPRESS_WARNING_PUSH                                                              \
     DOCTEST_GCC_SUPPRESS_WARNING("-Wunknown-pragmas")                                              \

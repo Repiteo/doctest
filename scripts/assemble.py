@@ -8,137 +8,179 @@ This script scans for any .h and .cpp files in the parts/ directory,
 the final doctest.h header.
 """
 
-# /// script
-# requires-python = ">=3.6"
-# ///
+from __future__ import annotations
 
+import sys
+from itertools import chain
+
+if sys.version_info <= (3, 6):
+    raise RuntimeError("Python 3.6 or later required.")
 
 import re
 import string
-import sys
-from itertools import chain
+from collections.abc import Generator
 from pathlib import Path
-from textwrap import dedent
+from typing import NoReturn
 
+ROOT        = Path(__file__).resolve().parent.parent
+OUTPUT      = ROOT / "doctest" / "doctest.h"
+PUBLIC_DIR  = ROOT / "doctest" / "parts" / "public"
+PRIVATE_DIR = ROOT / "doctest" / "parts" / "private"
 
-TEMPLATE = string.Template(
-    dedent(
-        """\
-  // ============================================================= lgtm [cpp/missing-header-guard]
-  // == DO NOT MODIFY THIS FILE BY HAND - IT IS AUTO GENERATED! ==
-  // =============================================================
-  $headers
+PUBLIC_HEADERS  = sorted(PUBLIC_DIR.rglob("*.h"))
+PRIVATE_HEADERS = sorted(PRIVATE_DIR.rglob("*.h"))
+PRIVATE_SOURCES = sorted(PRIVATE_DIR.rglob("*.cpp"))
 
-  #if defined(DOCTEST_CONFIG_IMPLEMENT) && !defined(DOCTEST_LIBRARY_IMPLEMENTATION)
-
-  DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wunused-macros")
-  #define DOCTEST_LIBRARY_IMPLEMENTATION
-  DOCTEST_CLANG_SUPPRESS_WARNING_POP
-
-  DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
-
-  $sources
-
-  DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP
-
-  #endif // defined(DOCTEST_CONFIG_IMPLEMENT) && !defined(DOCTEST_LIBRARY_IMPLEMENTATION)
-"""
-    )
+RE_HEADER_GUARD = re.compile(r"^#(?:ifndef|define|endif) (?:// )?([A-Z0-9_]+)")
+RE_INCLUDE      = re.compile(r'^#include ["<]([^">]+)[">]')
+RE_GROUPS       = re.compile(
+    r"^(?P<guardbegin>#ifndef.*\n#define.*)?"
+    + r"\s*"
+    + r'(?P<includes>(?:#include ["<][^">]+[">].*\n)*)?'
+    + r"\s*"
+    + r"(?P<content>(?:.*\n)*?)"
+    + r"\s*"
+    + r"(?P<guardend>#endif.*)?"
+    + r"\s*$",
 )
 
+TEMPLATE = string.Template("""\
+// =================================================================================================
+// == DO NOT MODIFY THIS FILE BY HAND - IT IS AUTO GENERATED! ======================================
+// =================================================================================================
+//
+// doctest.h - the lightest feature-rich C++ single-header testing framework for unit tests and TDD
+//
+// Copyright (c) 2016-2023 Viktor Kirilov
+//
+// Distributed under the MIT Software License
+// See accompanying file LICENSE.txt or copy at
+// https://opensource.org/licenses/MIT
+//
+// The documentation can be found at the library's page:
+// https://github.com/doctest/doctest/blob/master/doc/markdown/readme.md
+//
+// =================================================================================================
+// =================================================================================================
+// =================================================================================================
+//
+// The library is heavily influenced by Catch - https://github.com/catchorg/Catch2
+// which uses the Boost Software License - Version 1.0
+// see here - https://github.com/catchorg/Catch2/blob/master/LICENSE.txt
+//
+// The concept of subcases (sections in Catch) and expression decomposition are from there.
+// Some parts of the code are taken directly:
+// - stringification - the detection of "ostream& operator<<(ostream&, const T&)" and StringMaker<>
+// - the Approx() helper class for floating point comparison
+// - colors in the console
+// - breaking into a debugger
+// - signal / SEH handling
+// - timer
+// - XmlWriter class - thanks to Phil Nash for allowing the direct reuse (AKA copy/paste)
+//
+// The expression decomposing templates are taken from lest - https://github.com/martinmoene/lest
+// which uses the Boost Software License - Version 1.0
+// see here - https://github.com/martinmoene/lest/blob/master/LICENSE.txt
+//
+// =================================================================================================
+// =================================================================================================
+// =================================================================================================
 
-def main(args):
+#ifndef DOCTEST_LIBRARY_INCLUDED
+#define DOCTEST_LIBRARY_INCLUDED
+
+$public_headers
+
+#endif // DOCTEST_LIBRARY_INCLUDED
+
+#if defined(DOCTEST_CONFIG_IMPLEMENT) && !defined(DOCTEST_LIBRARY_IMPLEMENTATION)
+
+DOCTEST_CLANG_SUPPRESS_WARNING_WITH_PUSH("-Wunused-macros")
+#define DOCTEST_LIBRARY_IMPLEMENTATION
+DOCTEST_CLANG_SUPPRESS_WARNING_POP
+
+$private_headers
+
+$private_sources
+
+#endif // defined(DOCTEST_CONFIG_IMPLEMENT) && !defined(DOCTEST_LIBRARY_IMPLEMENTATION)
+""")
+
+IDENTIFIER = string.Template("""\
+// =================================================================================================
+// == $full_path
+// =================================================================================================
+""")
+
+
+def process_file(file: Path, visited: set[Path]) -> Generator[str, None, None]:
+    """
+    Process a file, yielding lines of code with #include's and header guards scrubbed.
+
+    Assuming the file represents a C source file, iterates over each line,
+    yielding the contents. If the line is an #include which has NOT
+    yet been seen (as indicated by the `visitor` set), then the
+    contents of THAT file is recursively run through this same method.
+
+    If the file HAS been visited, then it is ignored and the line is not yielded.
+
+    The effect of this is a fusion of:
+        1. A topological sort by-header, and
+        2. Inlining header content, and
+        3. Scrubbing #include's to other doctest files
+    """
+
+    if file in visited:
+        return
+
+    visited.add(file)
+    groups = RE_GROUPS.match(file.read_text(encoding="utf-8", newline="\n")).groupdict()
+
+    if file.suffix == ".h":
+        assert groups["guardbegin"] is not None and groups["guardend"] is not None
+        guards = [
+            RE_HEADER_GUARD.match(guard).group(1)
+            for guard in groups["guardbegin"].splitlines() + [groups["guardend"]]
+        ]
+        assert len(guards) == 3
+        assert guards[0] == guards[1] and guards[0] == guards[2]
+    else:
+        assert not groups["guardbegin"] and not groups["guardend"]
+
+    for include in groups.get("includes", "").splitlines():
+        include_path = Path(RE_INCLUDE.match(include).group(1)).resolve()
+        yield from process_file(include_path, visited)
+
+    full_path = (file.relative_to(ROOT).as_posix() + " ").ljust(94, "=")
+    yield IDENTIFIER.substitute(full_path=full_path)
+
+    for line in groups["content"].split("\n"):
+        yield line
+
+
+def process_files(files: list[Path], visited: set[Path]):
+    """Utility linker for processing files."""
+    return "\n".join(chain.from_iterable(process_file(file, visited) for file in files))
+
+
+def main(args) -> NoReturn:
     """Script entry-point."""
 
-    remap = "--remap" in sys.argv
+    if len(args) != 1:
+        print("Usage: scripts/assemble.py", file=sys.stderr)
+        sys.exit(1)
 
-    script = Path(__file__).resolve()
-    root = script.parent.parent
+    visited = set()
 
-    public_dir  = root / "doctest" / "parts" / "public"
-    private_dir = root / "doctest" / "parts" / "private"
-    output      = root / "doctest" / "doctest.h"
-
-    public_headers  = sorted(set(public_dir.rglob("*.h")))
-    private_headers = sorted(set(private_dir.rglob("*.h")))
-    private_sources = sorted(set(private_dir.rglob("*.cpp")))
-
-    def extract_header(line):
-        """
-        Extract a header file name from a line of C code.
-
-        Assuming the input looks something like:
-
-          ```c
-          #include "foo.h"
-          #include <bar.h>
-          ```
-
-        This function will return "foo.h" and "bar.h" respectively
-        """
-
-        matches = re.findall(r'#include\s*["<]([^">]+)[">]', line)
-        if len(matches) == 0:
-            return None
-        if len(matches) == 1:
-            return matches[0]
-
-        reason = f"'{line}' has multiple includes"
-        raise RuntimeError(reason)
-
-    def process_file(file, visited, headers):
-        """
-        Process a file, yielding lines of code with #include's scrubbed.
-
-        Assuming the file represents a C source file, iterates over each line,
-        yielding the contents. If the line is an #include which has NOT
-        yet been seen (as indicated by the `visitor` set), then the
-        contents of THAT file is recursively run through this same method.
-
-        If the file HAS been visited, then it is ignored and the line is not yielded.
-
-        The effect of this is a fusion of:
-          1. A topological sort by-header, and
-          2. Inlining header content, and
-          3. Scrubbing #include's to other doctest files
-        """
-
-        if file in visited:
-            return
-
-        visited.add(file)
-        content = file.read_text(encoding="utf-8")
-
-        if remap:
-            yield f'#line 1 "{file.resolve()}"'
-
-        for idx, line in enumerate(content.splitlines(keepends=False), start=1):
-            header = extract_header(line)
-            if (header is not None) and ((root / header) in headers):
-                yield from process_file(root / header, visited=visited, headers=headers)
-                if remap:
-                    yield f'#line {idx + 1} "{file.resolve()}"'
-            else:
-                yield line
-
-    visited     = set()
-    doctest_fwd = root / "doctest" / "parts" / "doctest_fwd.h"
     result = TEMPLATE.substitute(
-        headers="\n".join(
-            process_file(doctest_fwd, visited=visited, headers=public_headers)
-        ),
-        sources="\n".join(
-            chain.from_iterable(
-                process_file(
-                    file, visited=visited, headers=public_headers + private_headers + [doctest_fwd]
-                )
-                for file in private_sources
-            )
-        ),
+        public_headers=process_files(PUBLIC_HEADERS, visited),
+        private_headers=process_files(PRIVATE_HEADERS, visited),
+        private_sources=process_files(PRIVATE_SOURCES, visited),
     )
 
-    with open(output, "w", encoding="utf-8", newline="\n") as out:
+    with open(OUTPUT, "w", encoding="utf-8", newline="\n") as out:
         out.write(result)
+
     sys.exit(0)
 
 
