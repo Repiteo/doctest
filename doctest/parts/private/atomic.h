@@ -1,11 +1,36 @@
 #ifndef DOCTEST_PARTS_PRIVATE_ATOMIC
 #define DOCTEST_PARTS_PRIVATE_ATOMIC
 
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/config.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
 #ifndef DOCTEST_CONFIG_DISABLE
+
+#ifndef DOCTEST_CONFIG_NO_MULTITHREADING
+#include <atomic>
+#include <mutex> // IWYU pragma: keep // Used in macros.
+
+#define DOCTEST_DECLARE_MUTEX(name) std::mutex name;
+#define DOCTEST_DECLARE_STATIC_MUTEX(name) static DOCTEST_DECLARE_MUTEX(name)
+#define DOCTEST_LOCK_MUTEX(name) std::lock_guard<std::mutex> DOCTEST_ANONYMOUS(DOCTEST_ANON_LOCK_)(name);
+#else
+#define DOCTEST_DECLARE_MUTEX(name)
+#define DOCTEST_DECLARE_STATIC_MUTEX(name)
+#define DOCTEST_LOCK_MUTEX(name)
+#endif // DOCTEST_CONFIG_NO_MULTITHREADING
+
+#ifndef DOCTEST_MULTI_LANE_ATOMICS_THREAD_LANES
+#define DOCTEST_MULTI_LANE_ATOMICS_THREAD_LANES 32
+#endif
+
+#ifndef DOCTEST_MULTI_LANE_ATOMICS_CACHE_LINE_SIZE
+#define DOCTEST_MULTI_LANE_ATOMICS_CACHE_LINE_SIZE 64
+#endif
+
+#if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)
+#define DOCTEST_CONFIG_NO_MULTI_LANE_ATOMICS
+#endif
 
 namespace doctest {
 namespace detail {

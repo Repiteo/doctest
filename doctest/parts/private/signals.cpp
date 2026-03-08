@@ -1,6 +1,15 @@
-#include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/signals.h"
 #include "doctest/parts/private/context_state.h"
+#include "doctest/parts/private/assert/handler.h"
+#include "doctest/parts/public/debugger.h"
+
+#ifdef DOCTEST_PLATFORM_WINDOWS
+#include "doctest/parts/private/platform.h" // IWYU pragma: keep
+#endif
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <csignal>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 

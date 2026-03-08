@@ -1,7 +1,18 @@
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/color.h"
 #include "doctest/parts/private/context_state.h"
+#include "doctest/parts/private/platform.h" // IWYU pragma: keep
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <cstdio>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
+
+// this is a fix for https://github.com/doctest/doctest/issues/348
+// https://mail.gnome.org/archives/xml/2012-January/msg00000.html
+#if !defined(HAVE_UNISTD_H) && !defined(STDOUT_FILENO)
+#define STDOUT_FILENO fileno(stdout)
+#endif // HAVE_UNISTD_H
 
 #if !defined(DOCTEST_CONFIG_COLORS_NONE)
 #if !defined(DOCTEST_CONFIG_COLORS_WINDOWS) && !defined(DOCTEST_CONFIG_COLORS_ANSI)

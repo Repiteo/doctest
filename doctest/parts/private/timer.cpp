@@ -1,7 +1,10 @@
-#include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/timer.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+
+#ifdef DOCTEST_PLATFORM_WINDOWS
+#include "doctest/parts/private/platform.h" // IWYU pragma: keep
+#endif
 
 #ifndef DOCTEST_CONFIG_DISABLE
 

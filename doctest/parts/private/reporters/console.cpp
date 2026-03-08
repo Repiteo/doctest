@@ -1,11 +1,24 @@
-#include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/context_state.h"
 #include "doctest/parts/private/reporter.h"
+#include "doctest/parts/private/reporters/common.h"
 #include "doctest/parts/private/reporters/console.h"
+#include "doctest/parts/public/path.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
 #ifndef DOCTEST_CONFIG_DISABLE
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <iomanip>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
+
+#ifdef DOCTEST_CONFIG_NO_UNPREFIXED_OPTIONS
+#define DOCTEST_OPTIONS_PREFIX_DISPLAY DOCTEST_CONFIG_OPTIONS_PREFIX
+#else
+#define DOCTEST_OPTIONS_PREFIX_DISPLAY ""
+#endif
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
 namespace doctest {
 

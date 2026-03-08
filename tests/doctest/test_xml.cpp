@@ -1,4 +1,10 @@
 #include <doctest/parts/private/xml.h>
+#include <doctest/parts/public/assert/expression.h>
+#include <doctest/parts/public/assert/result.h>
+#include <doctest/parts/public/debugger.h>
+#include <doctest/parts/public/macros.h>
+#include <doctest/parts/public/subcase.h>
+#include <doctest/parts/public/test_case.h>
 
 #include <sstream>
 #include <string>

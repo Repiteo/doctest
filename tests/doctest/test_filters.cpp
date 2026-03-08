@@ -1,6 +1,12 @@
 #include <doctest/parts/private/filters.h>
+#include <doctest/parts/public/assert/expression.h>
+#include <doctest/parts/public/debugger.h>
+#include <doctest/parts/public/macros.h>
+#include <doctest/parts/public/subcase.h>
+#include <doctest/parts/public/test_case.h>
+#include <doctest/parts/public/test_suite.h>
+
 #include <functional>
-#include <vector>
 
 using doctest::detail::wildcmp;
 using doctest::detail::matchesAny;

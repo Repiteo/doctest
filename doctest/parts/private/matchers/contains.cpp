@@ -1,4 +1,8 @@
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/matchers/contains.h"
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <cstring>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
@@ -8,7 +12,7 @@ Contains::Contains(const String &str)
     : string(str) {}
 
 bool Contains::checkWith(const String &other) const {
-    return strstr(other.c_str(), string.c_str()) != nullptr;
+    return std::strstr(other.c_str(), string.c_str()) != nullptr;
 }
 
 String toString(const Contains &in) {

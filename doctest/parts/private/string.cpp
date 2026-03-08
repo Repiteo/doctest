@@ -1,7 +1,12 @@
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/string.h"
 #include "doctest/parts/private/exceptions.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <sstream>
+#include <vector>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 namespace doctest {
 namespace detail {

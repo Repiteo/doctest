@@ -1,6 +1,11 @@
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/matchers/approx.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <cmath>
+#include <limits>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 namespace doctest {
 
@@ -26,7 +31,7 @@ Approx &Approx::scale(double newScale) {
 bool operator==(double lhs, const Approx &rhs) {
     // Thanks to Richard Harris for his help refining this formula
     return std::fabs(lhs - rhs.m_value) <
-           rhs.m_epsilon * (rhs.m_scale + std::max<double>(std::fabs(lhs), std::fabs(rhs.m_value)));
+           rhs.m_epsilon * (rhs.m_scale + std::fmax<double>(std::fabs(lhs), std::fabs(rhs.m_value)));
 }
 
 bool operator==(const Approx &lhs, double rhs) {

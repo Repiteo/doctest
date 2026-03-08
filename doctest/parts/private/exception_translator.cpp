@@ -1,5 +1,8 @@
-#include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/exception_translator.h"
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <string>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 

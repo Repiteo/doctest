@@ -1,5 +1,8 @@
-#include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/filters.h"
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <cctype>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
@@ -11,7 +14,7 @@ int wildcmp(const char *str, const char *wild, bool caseSensitive) {
     const char *mp = wild;
 
     while ((*str) && (*wild != '*')) {
-        if ((caseSensitive ? (*wild != *str) : (tolower(*wild) != tolower(*str))) && (*wild != '?')) {
+        if ((caseSensitive ? (*wild != *str) : (std::tolower(*wild) != std::tolower(*str))) && (*wild != '?')) {
             return 0;
         }
         wild++;
@@ -25,7 +28,7 @@ int wildcmp(const char *str, const char *wild, bool caseSensitive) {
             }
             mp = wild;
             cp = str + 1;
-        } else if ((caseSensitive ? (*wild == *str) : (tolower(*wild) == tolower(*str))) || (*wild == '?')) {
+        } else if ((caseSensitive ? (*wild == *str) : (std::tolower(*wild) == std::tolower(*str))) || (*wild == '?')) {
             wild++;
             str++;
         } else {

@@ -1,5 +1,9 @@
-#include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/reporters/common.h"
+#include "doctest/parts/public/color.h"
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <ostream>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 

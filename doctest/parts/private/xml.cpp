@@ -1,8 +1,11 @@
-#include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/xml.h"
 #include "doctest/parts/private/exceptions.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <iomanip>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 #ifndef DOCTEST_CONFIG_DISABLE
 

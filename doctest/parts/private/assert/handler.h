@@ -1,7 +1,8 @@
 #ifndef DOCTEST_PARTS_PRIVATE_ASSERT_HANDLER
 #define DOCTEST_PARTS_PRIVATE_ASSERT_HANDLER
 
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/assert/handler.h"
+#include "doctest/parts/public/std/fwd.h" // IWYU pragma: keep // Forward-declare `std::string`
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 

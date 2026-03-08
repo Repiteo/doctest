@@ -1,4 +1,9 @@
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/matchers/is_nan.h"
+#include "doctest/parts/public/string.h"
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <cmath>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 

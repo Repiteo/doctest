@@ -1,9 +1,19 @@
 #ifndef DOCTEST_PARTS_PRIVATE_EXCEPTIONS
 #define DOCTEST_PARTS_PRIVATE_EXCEPTIONS
 
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/config.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+// IWYU pragma: begin_keep
+#ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <exception>
+#ifndef DOCTEST_CONFIG_NO_INCLUDE_IOSTREAM
+#include <iostream>
+#endif // DOCTEST_CONFIG_NO_INCLUDE_IOSTREAM
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
+// IWYU pragma: end_keep
+#endif // DOCTEST_CONFIG_NO_EXCEPTIONS
 
 namespace doctest {
 namespace detail {

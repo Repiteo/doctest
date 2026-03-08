@@ -1,8 +1,12 @@
 #ifndef DOCTEST_PARTS_PRIVATE_REPORTER
 #define DOCTEST_PARTS_PRIVATE_REPORTER
 
-#include "doctest/parts/private/prelude.h"
-#include "doctest/parts/private/context_state.h"
+#include "doctest/parts/public/string.h"
+#include "doctest/parts/public/reporter.h"
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <map>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 

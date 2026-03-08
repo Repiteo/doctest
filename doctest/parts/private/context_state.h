@@ -1,13 +1,30 @@
 #ifndef DOCTEST_PARTS_PRIVATE_CONTEXT_STATE
 #define DOCTEST_PARTS_PRIVATE_CONTEXT_STATE
 
-#include "doctest/parts/private/prelude.h"
-#include "doctest/parts/private/timer.h"
 #include "doctest/parts/private/atomic.h"
+#include "doctest/parts/private/timer.h"
+#include "doctest/parts/public/context.h"
+#include "doctest/parts/public/reporter.h"
+#include "doctest/parts/public/string.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
+#ifndef DOCTEST_CONFIG_OPTIONS_PREFIX
+#define DOCTEST_CONFIG_OPTIONS_PREFIX "dt-"
+#endif
+
+#ifdef DOCTEST_CONFIG_DISABLE
+#define DOCTEST_BRANCH_ON_DISABLED(if_disabled, if_not_disabled) if_disabled
+#else
+#define DOCTEST_BRANCH_ON_DISABLED(if_disabled, if_not_disabled) if_not_disabled
+#endif // DOCTEST_CONFIG_DISABLE
+
 #ifndef DOCTEST_CONFIG_DISABLE
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <unordered_set>
+#include <vector>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 namespace doctest {
 namespace detail {

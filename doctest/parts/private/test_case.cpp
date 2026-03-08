@@ -1,4 +1,3 @@
-#include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/test_case.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH

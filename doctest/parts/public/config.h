@@ -12,6 +12,8 @@
 #include "doctest/parts/public/warnings.h"
 // IWYU pragma: end_exports
 
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
+
 // general compiler feature support table: https://en.cppreference.com/w/cpp/compiler_support
 // MSVC C++11 feature support table: https://msdn.microsoft.com/en-us/library/hh567368.aspx
 // GCC C++11 feature support table: https://gcc.gnu.org/projects/cxx-status.html
@@ -119,6 +121,14 @@
 #define DOCTEST_ALIGNMENT(x) __attribute__((aligned(x)))
 #endif
 
+#ifndef DOCTEST_THREAD_LOCAL
+#if defined(DOCTEST_CONFIG_NO_MULTITHREADING) || DOCTEST_MSVC && (DOCTEST_MSVC < DOCTEST_COMPILER(19, 0, 0))
+#define DOCTEST_THREAD_LOCAL
+#else
+#define DOCTEST_THREAD_LOCAL thread_local
+#endif // DOCTEST_MSVC
+#endif // DOCTEST_THREAD_LOCAL
+
 #ifdef DOCTEST_CONFIG_NO_CONTRADICTING_INLINE
 #define DOCTEST_INLINE_NOINLINE inline
 #else
@@ -198,6 +208,12 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 #else
 #define DOCTEST_HAS_BUILTIN(x) 0
 #endif // __has_builtin
+
+#ifndef DOCTEST_COUNTOF
+#define DOCTEST_COUNTOF(x) (sizeof(x) / sizeof(x[0]))
+#endif // DOCTEST_COUNTOF
+
+DOCTEST_SUPPRESS_PRIVATE_WARNINGS_POP
 
 #endif // DOCTEST_PARTS_PUBLIC_CONFIG
 

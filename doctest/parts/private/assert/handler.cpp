@@ -1,7 +1,13 @@
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/private/assert/handler.h"
 #include "doctest/parts/private/context_state.h"
 #include "doctest/parts/private/reporter.h"
-#include "doctest/parts/private/assert/handler.h"
+#include "doctest/parts/public/assert/result.h"
+#include "doctest/parts/public/debugger.h"   // IWYU pragma: keep // Used in macros.
+#include "doctest/parts/public/exceptions.h" // IWYU pragma: keep // Used in macros.
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <string>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 

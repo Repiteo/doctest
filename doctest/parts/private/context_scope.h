@@ -1,11 +1,15 @@
 #ifndef DOCTEST_PARTS_PRIVATE_CONTEXT_SCOPE
 #define DOCTEST_PARTS_PRIVATE_CONTEXT_SCOPE
 
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/context_scope.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
 #ifndef DOCTEST_CONFIG_DISABLE
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <vector>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 namespace doctest {
 namespace detail {

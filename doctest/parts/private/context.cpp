@@ -1,12 +1,19 @@
-#include "doctest/parts/private/prelude.h"
 #include "doctest/parts/private/context_state.h"
 #include "doctest/parts/private/reporter.h"
-#include "doctest/parts/private/reporters/common.h"
 #include "doctest/parts/private/reporters/debug_output_window.h"
 #include "doctest/parts/private/exception_translator.h"
 #include "doctest/parts/private/test_case.h"
 #include "doctest/parts/private/filters.h"
 #include "doctest/parts/private/signals.h"
+#include "doctest/parts/public/debugger.h"
+#include "doctest/parts/public/exceptions.h"
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
 
@@ -254,10 +261,8 @@ void Context::parseArgs(int argc, const char *const *argv, bool withDefaults) {
     if (parseIntOption(argc, argv, DOCTEST_CONFIG_OPTIONS_PREFIX name "=", option_bool, intRes) ||                     \
         parseIntOption(argc, argv, DOCTEST_CONFIG_OPTIONS_PREFIX sname "=", option_bool, intRes))                      \
         p->var = static_cast<bool>(intRes);                                                                            \
-    else if (                                                                                                          \
-        parseFlag(argc, argv, DOCTEST_CONFIG_OPTIONS_PREFIX name) ||                                                   \
-        parseFlag(argc, argv, DOCTEST_CONFIG_OPTIONS_PREFIX sname)                                                     \
-    )                                                                                                                  \
+    else if (parseFlag(argc, argv, DOCTEST_CONFIG_OPTIONS_PREFIX name) ||                                              \
+             parseFlag(argc, argv, DOCTEST_CONFIG_OPTIONS_PREFIX sname))                                               \
         p->var = true;                                                                                                 \
     else if (withDefaults)                                                                                             \
     p->var = default

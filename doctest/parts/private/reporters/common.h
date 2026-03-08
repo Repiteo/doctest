@@ -1,13 +1,9 @@
 #ifndef DOCTEST_PARTS_PRIVATE_REPORTERS_COMMON
 #define DOCTEST_PARTS_PRIVATE_REPORTERS_COMMON
 
-#include "doctest/parts/private/prelude.h"
+#include "doctest/parts/public/assert/data.h"
 
 DOCTEST_SUPPRESS_PRIVATE_WARNINGS_PUSH
-
-#ifndef DOCTEST_CONFIG_OPTIONS_PREFIX
-#define DOCTEST_CONFIG_OPTIONS_PREFIX "dt-"
-#endif
 
 #ifndef DOCTEST_CONFIG_DISABLE
 
