@@ -2,18 +2,17 @@ name: bazel
 
 on:
   push:
-    branches: [dev, master]
     paths-ignore:
-      - 'doc/**'
-      - 'scripts/**'
-      - 'LICENSE.txt'
-      - 'README.md'
+      - "doc/**"
+      - "scripts/**"
+      - "LICENSE.txt"
+      - "README.md"
   pull_request:
     paths-ignore:
-      - 'doc/**'
-      - 'scripts/**'
-      - 'LICENSE.txt'
-      - 'README.md'
+      - "doc/**"
+      - "scripts/**"
+      - "LICENSE.txt"
+      - "README.md"
 
 concurrency:
   group: ${{ github.workflow }}|${{ github.ref_name }}|bazel
@@ -29,6 +28,6 @@ jobs:
           - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
-    - run: bazelisk test --config=ci ...
-      working-directory: examples
+      - uses: actions/checkout@v3
+      - run: bazelisk test --config=ci ...
+        working-directory: examples

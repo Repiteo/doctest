@@ -2,7 +2,6 @@ name: CI
 
 on:
   push:
-    branches: [dev, master]
     paths-ignore:
       - "doc/**"
       - "scripts/**"
@@ -41,46 +40,46 @@ jobs:
 
         include:
           # Linux gcc
-          - { compiler: gcc,   version: "4.8", os: ubuntu-24.04, container: ubuntu:18.04 }
-          - { compiler: gcc,   version: "5",   os: ubuntu-24.04, container: ubuntu:18.04 }
-          - { compiler: gcc,   version: "6",   os: ubuntu-24.04, container: ubuntu:18.04 }
-          - { compiler: gcc,   version: "7",   os: ubuntu-24.04, container: ubuntu:18.04 }
-          - { compiler: gcc,   version: "8",   os: ubuntu-24.04, container: ubuntu:18.04 }
-          - { compiler: gcc,   version: "9",   os: ubuntu-22.04                          }
-          - { compiler: gcc,   version: "10",  os: ubuntu-24.04                          }
-          - { compiler: gcc,   version: "11",  os: ubuntu-24.04                          }
-          - { compiler: gcc,   version: "12",  os: ubuntu-24.04                          }
-          - { compiler: gcc,   version: "13",  os: ubuntu-24.04                          }
-          - { compiler: gcc,   version: "14",  os: ubuntu-24.04                          }
-          - { compiler: gcc,   version: "15",  os: ubuntu-24.04, container: ubuntu:26.04 }
+          - { compiler: gcc, version: "4.8", os: ubuntu-24.04, container: ubuntu:18.04 }
+          - { compiler: gcc, version: "5", os: ubuntu-24.04, container: ubuntu:18.04 }
+          - { compiler: gcc, version: "6", os: ubuntu-24.04, container: ubuntu:18.04 }
+          - { compiler: gcc, version: "7", os: ubuntu-24.04, container: ubuntu:18.04 }
+          - { compiler: gcc, version: "8", os: ubuntu-24.04, container: ubuntu:18.04 }
+          - { compiler: gcc, version: "9", os: ubuntu-22.04 }
+          - { compiler: gcc, version: "10", os: ubuntu-24.04 }
+          - { compiler: gcc, version: "11", os: ubuntu-24.04 }
+          - { compiler: gcc, version: "12", os: ubuntu-24.04 }
+          - { compiler: gcc, version: "13", os: ubuntu-24.04 }
+          - { compiler: gcc, version: "14", os: ubuntu-24.04 }
+          - { compiler: gcc, version: "15", os: ubuntu-24.04, container: ubuntu:26.04 }
 
           # Linux clang
           - { compiler: clang, version: "3.9", os: ubuntu-24.04, container: ubuntu:18.04 }
           - { compiler: clang, version: "4.0", os: ubuntu-24.04, container: ubuntu:18.04 }
           - { compiler: clang, version: "5.0", os: ubuntu-24.04, container: ubuntu:18.04 }
           - { compiler: clang, version: "6.0", os: ubuntu-24.04, container: ubuntu:20.04 }
-          - { compiler: clang, version: "7",   os: ubuntu-24.04, container: ubuntu:20.04 }
-          - { compiler: clang, version: "8",   os: ubuntu-24.04, container: ubuntu:20.04 }
-          - { compiler: clang, version: "9",   os: ubuntu-24.04, container: ubuntu:20.04 }
-          - { compiler: clang, version: "10",  os: ubuntu-24.04, container: ubuntu:20.04 }
-          - { compiler: clang, version: "11",  os: ubuntu-22.04                          }
-          - { compiler: clang, version: "12",  os: ubuntu-22.04                          }
-          - { compiler: clang, version: "13",  os: ubuntu-22.04                          }
-          - { compiler: clang, version: "14",  os: ubuntu-24.04                          }
-          - { compiler: clang, version: "15",  os: ubuntu-24.04                          }
-          - { compiler: clang, version: "16",  os: ubuntu-24.04                          }
-          - { compiler: clang, version: "17",  os: ubuntu-24.04                          }
-          - { compiler: clang, version: "18",  os: ubuntu-24.04                          }
-          - { compiler: clang, version: "19",  os: ubuntu-24.04, container: ubuntu:26.04 }
-          - { compiler: clang, version: "20",  os: ubuntu-24.04, container: ubuntu:26.04 }
-          - { compiler: clang, version: "21",  os: ubuntu-24.04, container: ubuntu:26.04 }
+          - { compiler: clang, version: "7", os: ubuntu-24.04, container: ubuntu:20.04 }
+          - { compiler: clang, version: "8", os: ubuntu-24.04, container: ubuntu:20.04 }
+          - { compiler: clang, version: "9", os: ubuntu-24.04, container: ubuntu:20.04 }
+          - { compiler: clang, version: "10", os: ubuntu-24.04, container: ubuntu:20.04 }
+          - { compiler: clang, version: "11", os: ubuntu-22.04 }
+          - { compiler: clang, version: "12", os: ubuntu-22.04 }
+          - { compiler: clang, version: "13", os: ubuntu-22.04 }
+          - { compiler: clang, version: "14", os: ubuntu-24.04 }
+          - { compiler: clang, version: "15", os: ubuntu-24.04 }
+          - { compiler: clang, version: "16", os: ubuntu-24.04 }
+          - { compiler: clang, version: "17", os: ubuntu-24.04 }
+          - { compiler: clang, version: "18", os: ubuntu-24.04 }
+          - { compiler: clang, version: "19", os: ubuntu-24.04, container: ubuntu:26.04 }
+          - { compiler: clang, version: "20", os: ubuntu-24.04, container: ubuntu:26.04 }
+          - { compiler: clang, version: "21", os: ubuntu-24.04, container: ubuntu:26.04 }
 
           # macOS arm64
           - { os: macos-14, compiler: xcode, version: "15.0.1" } # Apple Clang 15.0.0
-          - { os: macos-14, compiler: xcode, version: "15.4"   } # Apple Clang 15.0.0
-          - { os: macos-14, compiler: xcode, version: "16.2"   } # Apple Clang 16.0.0
-          - { os: macos-15, compiler: xcode, version: "16.3"   } # Apple Clang 17.0.0
-          - { os: macos-14, compiler: gcc,   version: "13"     }
+          - { os: macos-14, compiler: xcode, version: "15.4" } # Apple Clang 15.0.0
+          - { os: macos-14, compiler: xcode, version: "16.2" } # Apple Clang 16.0.0
+          - { os: macos-15, compiler: xcode, version: "16.3" } # Apple Clang 17.0.0
+          - { os: macos-14, compiler: gcc, version: "13" }
 
     steps:
       - uses: actions/checkout@v5

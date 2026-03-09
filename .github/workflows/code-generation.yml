@@ -2,7 +2,6 @@ name: Code Generation
 
 on:
   push:
-    branches: [dev, master]
     paths-ignore:
       - "doc/**"
       - "LICENSE.txt"
